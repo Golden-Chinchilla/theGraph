@@ -1,9 +1,6 @@
 import { cacheExchange, createClient, fetchExchange, Provider, useQuery } from 'urql';
 const apiKey = import.meta.env.VITE_THEGRAPH_API_KEY;
 
-console.log('key(raw)=', import.meta.env.VITE_THEGRAPH_API_KEY);
-console.log('key(len)=', String(import.meta.env.VITE_THEGRAPH_API_KEY ?? '').length);
-
 const client = createClient({
     url: 'https://gateway.thegraph.com/api/subgraphs/id/A3Np3RQbaBA6oKJgiwDJeo5T3zrYfGHPWFYayMwtNDum',
     fetchOptions: {
@@ -16,17 +13,21 @@ const client = createClient({
 });
 
 const QUERY = `{
-  uniswapFactories(first: 5) {
-    id
-    pairCount
-    totalVolumeUSD
-    totalVolumeETH
-  }
-  tokens(first: 5) {
-    id
-    symbol
-    name
-    decimals
+  transaction(
+    id: "0xa91f1a1b4a58901c46c06ebed6753ac0fc5ca24c4a2d6c88370d62956f2e6dd7"
+  ) {
+    blockNumber
+    swaps {
+      amountUSD
+      amount0In
+      amount0Out
+      amount1In
+      amount1Out
+      from
+      timestamp
+      to
+      transaction
+    }
   }
 }`;
 
